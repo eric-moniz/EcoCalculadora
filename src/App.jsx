@@ -268,7 +268,7 @@ export default function EcoCalculator() {
                         <button
                             onClick={handleExportPDF}
                             disabled={isExporting}
-                            data-umami-event="Expotar PDF"
+                            data-umami-event="Exportar PDF"
                         >
                             {isExporting ? 'Exportando...' : 'Exportar PDF'}
                         </button>
