@@ -265,7 +265,11 @@ export default function EcoCalculator() {
 
                     <div className="action-buttons">
                         <button onClick={resetForm}>Refazer cálculo</button>
-                        <button onClick={handleExportPDF} disabled={isExporting}>
+                        <button
+                            onClick={handleExportPDF}
+                            disabled={isExporting}
+                            data-umami-event="Expotar PDF"
+                        >
                             {isExporting ? 'Exportando...' : 'Exportar PDF'}
                         </button>
                         <button onClick={clearHistory} className="delete-btn">
