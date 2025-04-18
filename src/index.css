@@ -1,0 +1,41 @@
+:root {
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('../src/assets/imagem_pegada_2.webp');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+    margin-top: 18px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #a7c37e;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+button:hover {
+    background-color: #5a8261;
+    color: white;
+}
+button:focus,
+button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
