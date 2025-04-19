@@ -190,6 +190,7 @@ export default function EcoCalculator() {
                                 {q.options.map((opt, idx) => (
                                     <label key={idx}>
                                         <input
+                                            className="opcao-resposta"
                                             type="radio"
                                             name={`question-${q.id}`}
                                             value={opt.score}
