@@ -192,7 +192,7 @@ export default function EcoCalculator() {
                                         <input
                                             className="opcao-resposta"
                                             type="radio"
-                                            name={`question-${q.id}`}
+                                            name={`q${q.id}-r${idx}`}
                                             value={opt.score}
                                             onChange={() => handleOptionChange(q.id, opt.score)}
                                             checked={answers[q.id] === opt.score}
