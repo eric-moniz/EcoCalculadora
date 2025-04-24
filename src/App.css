@@ -126,8 +126,17 @@ li {
         height: 230px !important;
     }
 
+    .recharts-default-legend {
+        padding-top: 12px !important;
+    }
+
     ul {
         padding-left: 24px;
+    }
+
+    .recharts-legend-wrapper {
+        width: auto !important;
+        bottom: -8px !important;
     }
 }
 

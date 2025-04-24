@@ -103,7 +103,6 @@ export default function EcoCalculator() {
 
     const handleOptionChange = (questionId, score) => {
         setAnswers({ ...answers, [questionId]: score });
-        console.log(answers, Object.keys(answers).length);
     };
 
     const calculateTotal = () => {
@@ -155,8 +154,15 @@ export default function EcoCalculator() {
         setIsExporting(true);
         try {
             const html2pdf = await import('html2pdf.js');
-            const element = document.getElementById('result-section');
-            await html2pdf.default().from(element).save('resultado_pegada_ecologica.pdf');
+            const element = document.getElementById('pdf-content');
+            const opt = {
+                margin: [0.1, 1, 0, 0.5],
+                filename: 'resultado_pegada_ecologica.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+            };
+            await html2pdf.default().set(opt).from(element).save('resultado_pegada_ecologica.pdf');
         } catch (error) {
             console.error('Erro ao exportar PDF:', error);
             alert('Erro ao gerar PDF.');
@@ -229,40 +235,42 @@ export default function EcoCalculator() {
                 </div>
             ) : (
                 <div id="result-section">
-                    <h2>Resultado</h2>
-                    <p>
-                        Sua pegada estimada é de <strong>{calculateTotal()}</strong> kg de CO₂ por
-                        mês.
-                    </p>
-                    <p className="feedback">{getFeedback(calculateTotal())}</p>
+                    <div id="pdf-content">
+                        <h2>Resultado</h2>
+                        <p>
+                            Sua pegada estimada é de <strong>{calculateTotal()}</strong> kg de CO₂
+                            por mês.
+                        </p>
+                        <p className="feedback">{getFeedback(calculateTotal())}</p>
 
-                    <Suspense fallback={<div>Carregando gráfico...</div>}>
-                        <PieChartSection chartData={chartData} />
-                    </Suspense>
+                        <Suspense fallback={<div>Carregando gráfico...</div>}>
+                            <PieChartSection chartData={chartData} />
+                        </Suspense>
 
-                    {getTips().length > 0 && (
-                        <div>
-                            <h3>Dicas Sustentáveis:</h3>
-                            <ul>
-                                {getTips().map((tip, index) => (
-                                    <li key={index}>{tip}</li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                        {getTips().length > 0 && (
+                            <div>
+                                <h3>Dicas Sustentáveis:</h3>
+                                <ul>
+                                    {getTips().map((tip, index) => (
+                                        <li key={index}>{tip}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
 
-                    {history.length > 0 && (
-                        <div>
-                            <h3>Histórico de Resultados:</h3>
-                            <ul>
-                                {history.map((entry, index) => (
-                                    <li key={index}>
-                                        {entry.date} — {entry.total} kg CO₂
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
+                        {history.length > 0 && (
+                            <div>
+                                <h3>Histórico de Resultados:</h3>
+                                <ul>
+                                    {history.map((entry, index) => (
+                                        <li key={index}>
+                                            {entry.date} — {entry.total} kg CO₂
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
 
                     <div className="action-buttons">
                         <button onClick={resetForm}>Refazer cálculo</button>
