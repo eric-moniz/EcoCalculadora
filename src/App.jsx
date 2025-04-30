@@ -3,6 +3,7 @@ const PieChartSection = React.lazy(() => import('./components/PieChartSection'))
 import { Analytics } from '@vercel/analytics/react';
 
 import './App.css';
+import Footer from './components/Footer';
 
 const questions = [
     {
@@ -302,6 +303,7 @@ export default function EcoCalculator() {
                     </div>
                 </div>
             )}
+            <Footer />
             {/* Vercel Web Analitycs */}
             <Analytics />
             {/* Fim do Vercel Web Analitycs */}
