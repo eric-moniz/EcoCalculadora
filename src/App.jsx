@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 const PieChartSection = React.lazy(() => import('./components/PieChartSection'));
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics, track } from '@vercel/analytics/react';
 
 import './App.css';
 
@@ -80,6 +80,7 @@ export default function EcoCalculator() {
     const [history, setHistory] = useState([]);
     const [numeroQuestao, setNumeroQuestao] = useState(1);
     const [isExporting, setIsExporting] = useState(false);
+    const [respostaAtual, setRespostaAtual] = useState({});
 
     useEffect(() => {
         const saved = localStorage.getItem('ecoCalculatorResult');
@@ -101,8 +102,10 @@ export default function EcoCalculator() {
         }
     };
 
-    const handleOptionChange = (questionId, score) => {
+    const handleOptionChange = (questionId, score, question, answer) => {
         setAnswers({ ...answers, [questionId]: score });
+
+        setRespostaAtual({ ...respostaAtual, [question]: answer });
     };
 
     const calculateTotal = () => {
@@ -134,12 +137,14 @@ export default function EcoCalculator() {
         const updatedHistory = [...history, newEntry];
         setHistory(updatedHistory);
         localStorage.setItem('ecoCalculatorHistory', JSON.stringify(updatedHistory));
+        track('Questionario', respostaAtual);
     };
 
     const resetForm = () => {
         setSubmitted(false);
         setAnswers({});
         setNumeroQuestao(1);
+        setRespostaAtual('');
         localStorage.removeItem('ecoCalculatorResult');
     };
 
@@ -200,7 +205,14 @@ export default function EcoCalculator() {
                                             type="radio"
                                             name={`question-${q.id}`}
                                             value={opt.score}
-                                            onChange={() => handleOptionChange(q.id, opt.score)}
+                                            onChange={() =>
+                                                handleOptionChange(
+                                                    q.id,
+                                                    opt.score,
+                                                    q.question,
+                                                    opt.text
+                                                )
+                                            }
                                             checked={answers[q.id] === opt.score}
                                             required
                                         />
@@ -212,6 +224,13 @@ export default function EcoCalculator() {
 
                         {numeroQuestao == questions.length ? (
                             <button
+                                // data-umami-event="Questionario Preenchido"
+                                // data-umami-event-pergunta_1={respostaAtual[0]}
+                                // data-umami-event-pergunta_2={respostaAtual[1]}
+                                // data-umami-event-pergunta_3={respostaAtual[2]}
+                                // data-umami-event-pergunta_4={respostaAtual[3]}
+                                // data-umami-event-pergunta_5={respostaAtual[4]}
+                                // data-umami-event-pergunta_6={respostaAtual[5]}
                                 type="submit"
                                 disabled={Object.keys(answers).length < questions.length}
                             >
@@ -275,6 +294,7 @@ export default function EcoCalculator() {
                     <div className="action-buttons">
                         <button onClick={resetForm}>Refazer cálculo</button>
                         <button
+                            className="export-btn"
                             onClick={handleExportPDF}
                             disabled={isExporting}
                             data-umami-event="Exportar PDF"

@@ -99,15 +99,6 @@ li {
     flex-wrap: wrap;
 }
 
-.delete-btn {
-    color: white;
-    background-color: #ff0000;
-}
-
-.delete-btn:hover {
-    background-color: #cc0000;
-}
-
 @media screen and (max-width: 450px) {
     .cabecalho {
         margin: 0;

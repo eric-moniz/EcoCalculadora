@@ -30,6 +30,25 @@ button:hover {
     background-color: #5a8261;
     color: white;
 }
+
+.delete-btn {
+    color: white;
+    background-color: #ff0000;
+}
+
+.delete-btn:hover {
+    background-color: #cc0000;
+}
+
+.export-btn {
+    color: #000;
+    background-color: #ffe066;
+}
+
+.export-btn:hover {
+    background-color: #ccb200;
+}
+
 button:focus,
 button:focus-visible {
     outline: 4px auto -webkit-focus-ring-color;
