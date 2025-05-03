@@ -81,7 +81,7 @@ export default function EcoCalculator() {
     const [history, setHistory] = useState([]);
     const [numeroQuestao, setNumeroQuestao] = useState(1);
     const [isExporting, setIsExporting] = useState(false);
-    const [respostaAtual, setRespostaAtual] = useState([]);
+    const [respostaAtual, setRespostaAtual] = useState({});
 
     useEffect(() => {
         const saved = localStorage.getItem('ecoCalculatorResult');
@@ -105,9 +105,7 @@ export default function EcoCalculator() {
 
     const handleOptionChange = (questionId, score, answer) => {
         setAnswers({ ...answers, [questionId]: score });
-
-        const respostas = [...respostaAtual, answer];
-        setRespostaAtual(respostas);
+        setRespostaAtual({ ...respostaAtual, [questionId]: answer });
     };
 
     const calculateTotal = () => {
@@ -221,12 +219,12 @@ export default function EcoCalculator() {
                         {numeroQuestao == questions.length ? (
                             <button
                                 data-umami-event="Questionario Preenchido"
-                                data-umami-event-pergunta_1={respostaAtual[0]}
-                                data-umami-event-pergunta_2={respostaAtual[1]}
-                                data-umami-event-pergunta_3={respostaAtual[2]}
-                                data-umami-event-pergunta_4={respostaAtual[3]}
-                                data-umami-event-pergunta_5={respostaAtual[4]}
-                                data-umami-event-pergunta_6={respostaAtual[5]}
+                                data-umami-event-pergunta_1={respostaAtual[1]}
+                                data-umami-event-pergunta_2={respostaAtual[2]}
+                                data-umami-event-pergunta_3={respostaAtual[3]}
+                                data-umami-event-pergunta_4={respostaAtual[4]}
+                                data-umami-event-pergunta_5={respostaAtual[5]}
+                                data-umami-event-pergunta_6={respostaAtual[6]}
                                 type="submit"
                                 disabled={Object.keys(answers).length < questions.length}
                             >
