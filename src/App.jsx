@@ -295,7 +295,7 @@ export default function EcoCalculator() {
                             disabled={isExporting}
                             data-umami-event="Exportar PDF"
                         >
-                            {isExporting ? 'Exportando...' : 'Exportar PDF'}
+                            {isExporting ? 'Exportando...' : 'Exportar cálculo'}
                         </button>
                         <button onClick={clearHistory} className="delete-btn">
                             Excluir histórico
